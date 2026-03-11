@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width">
+
+<style>
+body{margin:0;overflow:hidden;}
+</style>
+
+</head>
+
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+<script>
+
+let scene=new THREE.Scene()
+
+let camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight)
+
+let renderer=new THREE.WebGLRenderer()
+
+renderer.setSize(window.innerWidth,window.innerHeight)
+
+document.body.appendChild(renderer.domElement)
+
+let light=new THREE.DirectionalLight(0xffffff,1)
+
+light.position.set(5,10,5)
+
+scene.add(light)
+
+let blocks=[]
+
+function createBlock(x,y,z){
+
+let geo=new THREE.BoxGeometry()
+
+let mat=new THREE.MeshLambertMaterial({color:0x44aa44})
+
+let block=new THREE.Mesh(geo,mat)
+
+block.position.set(x,y,z)
+
+scene.add(block)
+
+blocks.push(block)
+
+}
+
+for(let x=-10;x<10;x++){
+
+for(let z=-10;z<10;z++){
+
+createBlock(x,0,z)
+
+}
+
+}
+
+camera.position.set(0,5,10)
+
+function animate(){
+
+requestAnimationFrame(animate)
+
+renderer.render(scene,camera)
+
+}
+
+animate()
+
+</script>
+
+</body>
+</html>
