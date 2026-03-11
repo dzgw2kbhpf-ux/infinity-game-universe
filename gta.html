@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width">
+<style>
+body{margin:0;overflow:hidden;}
+</style>
+</head>
+
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+<script>
+
+let scene=new THREE.Scene()
+
+let camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight)
+
+let renderer=new THREE.WebGLRenderer()
+
+renderer.setSize(innerWidth,innerHeight)
+
+document.body.appendChild(renderer.domElement)
+
+let road=new THREE.Mesh(
+new THREE.PlaneGeometry(300,300),
+new THREE.MeshBasicMaterial({color:0x222222})
+)
+
+road.rotation.x=-Math.PI/2
+scene.add(road)
+
+let car=new THREE.Mesh(
+new THREE.BoxGeometry(2,1,4),
+new THREE.MeshBasicMaterial({color:0xff0000})
+)
+
+scene.add(car)
+
+document.addEventListener("keydown",(e)=>{
+
+if(e.key=="w") car.position.z-=1
+if(e.key=="s") car.position.z+=1
+if(e.key=="a") car.position.x-=1
+if(e.key=="d") car.position.x+=1
+
+})
+
+camera.position.set(0,10,10)
+
+function animate(){
+
+requestAnimationFrame(animate)
+
+camera.lookAt(car.position)
+
+renderer.render(scene,camera)
+
+}
+
+animate()
+
+</script>
+
+</body>
+</html>
